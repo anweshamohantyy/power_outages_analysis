@@ -1,4 +1,4 @@
-# power_outages_analysis
+# Power Outage Analysis
 
 Analyzing Power Outage Duration: Natural Causes vs Infrastructure Failures 
 
