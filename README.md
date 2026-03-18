@@ -405,4 +405,47 @@ Next, I examine the frequency of different outage causes using `CAUSE.CATEGORY`.
   frameborder="0"
 ></iframe>
 
+According to the plot, severe weather accounts for the largest number of outages by a large margin, followed by intentional attacks, while all other categories occur much less frequently. This suggests that natural events are the primary cause of power outages in the dataset.
 
+**Number of Outages per Month**
+
+Finally, I examine how outages are distributed across different months of the year. 
+
+<iframe
+  src="assets/month.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+Outages appear to be more frequent during the summer months, peaking around June and July, while fewer outages occur in the late fall and winter months. This suggests a seasonal pattern, possibly linked to increased severe weather or higher energy demand during warmer periods.
+
+### Bivariate Analysis
+
+After examining individual variables, I explore relationships between pairs of variables to identify potential associations.
+
+**Outage Duration by Cause Category**
+
+To better understand how outage duration varies across different types of disruptions, I examine the relationship between `CAUSE.CATEGORY` and `OUTAGE.DURATION`.
+
+<iframe
+  src="assets/outage_cause_boxplot.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+Outage duration varies significantly by cause category. For example, fuel supply emergencies and severe weather generally have the longest and most variable durations. On the other hand, intentional attacks and islanding tend to result in shorter outages, although all categories show high variability in outliers.
+
+**Outage Duration by Cause Type**
+
+To investigate whether outage duration differs between outages caused by natural events and those caused by infrastructure-related failures, I compare the distribution of outage durations across these two types.
+
+<iframe
+  src="assets/types.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+Outages caused by natural events tend to have longer durations and greater variability compared to infrastructure-related outages. Infrastructure-related outages are typically shorter and more tightly distributed, although both categories contain some extreme outliers.
