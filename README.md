@@ -1,35 +1,34 @@
 # Power Outage Analysis
 
+#### By: Anwesha Mohanty
 
-Large-scale power outages can disrupt essential services such as healthcare, transportation, communication networks, and businesses. When outages affect large populations, the consequences can extend beyond temporary inconvenience and lead to significant economic and societal impacts. Understanding the factors that influence outages is therefore important for improving the reliability and resilience of power infrastructure.
+### Introduction
 
-In this project, I analyze a dataset containing information about **major power outages in the continental United States between 2000 and 2016**. The dataset was compiled by researchers at **Purdue University and the University of Illinois** and is publicly available through the study *“Major Power Outage Events in the Continental U.S.”* by **Mukherjee et al. (2018)**. It contains over **1,500 outage events** and more than **50 variables** describing characteristics of each outage, including information about outage duration, the number of customers affected, the cause of the outage, and environmental or regional conditions surrounding the event.
+Power outages can disrupt businesses and critical services such as healthcare, transportation, and communication. Since outages in the U.S. can affect large populations, the consequences can go beyond temporary inconvenience and lead to significant economic and societal impacts. Therefore, it is important to understand the various factors that affect outages in order to improve the reliability of existing infrastructure that is used to combat outages.
 
-Each observation represents a single outage event. Using this dataset, I investigate whether characteristics of an outage can be used to **predict the duration of the outage**, specifically whether an outage will be **long or short**. In addition to prediction, I explore whether outages caused by **natural events such as severe weather tend to last longer than outages caused by infrastructure-related failures**, which may reflect differences in the complexity of recovery efforts.
+In this project, I analyze a dataset that has information about **major power outages in the United States between January 2000 and July 2016**. The dataset was created by researchers at **Purdue University and the University of Illinois** containing **1534 rows**, which each correspond to an outage occurence and more than **50 variables** describing characteristics of each outage, such as outage duration, the cause of the outage, how many people were affected, environmental conditions, and more. Each observation represents a single outage event.
+
+ Using this dataset, I analyze the following question: **What characteristics of an outage can be used to predict the duration of the outage?**. Specifically, I explore whether outages caused by **natural events such as severe weather tend to last longer than outages caused by infrastructure-related failures**. I also investigate if characteristics of an outage can predict whether an outage will be **long or short**. Identifying these patterns is vital for improving outage response strategies, minimizing downtime, and strengthening systems against future disruptions.
 
 
 
 #### Relevant Data
 
-Although the dataset contains many variables, only a subset are relevant for predicting outage duration and exploring patterns in outage causes.
-
 The primary variable of interest is **`OUTAGE.DURATION`**, which measures the total duration of the outage in minutes. For the prediction task, I convert this variable into a binary outcome indicating whether an outage is **long** or **short**.
 
-Several variables are used as predictors in the baseline model:
+The following variables may also be of interest in my analysis: 
 
-- **`CAUSE.CATEGORY`** – identifies the reported cause of the outage (such as severe weather, equipment failure, or other causes). This variable is particularly relevant when comparing outages caused by natural events versus infrastructure-related failures.
-- **`MONTH`** – indicates when the outage occurred and may capture seasonal patterns, such as increased outages during extreme weather months.
-- **`YEAR`** – provides temporal context and may reflect long-term trends in outage frequency or grid reliability.
-- **`OUTAGE_START_DATE`** - 
-- **`OUTAGE_START_TIME`** -
-- **`OUTAGE_RESTORATION_DATE`** -
-
-In addition to these predictors, several other variables provide useful context about outage severity and may be explored during the analysis:
-- **`CLIMATE.CATEGORY`** – categorizes the type of climate conditions associated with the outage event.
-- **`CLIMATE.REGION`** – identifies the broader climate region in which the outage occurred.
+- **`CAUSE.CATEGORY`** – the reported cause of the outage (i.e. severe weather, equipment failure, etc). This variable is particularly relevant when comparing outages caused by natural events versus infrastructure-related failures.
+- **`MONTH`** – month in which the outage occured; may capture seasonal patterns, such as increased outages during extreme weather months.
+- **`OUTAGE_START_DATE`** - the day the outage started.
+- **`OUTAGE_START_TIME`** - the time at which the outage started.
+- **`OUTAGE_RESTORATION_DATE`** - the day the power was restored.
+- **`OUTAGE_RESTORATION_TIME`** - the time the power was restored.
+- **`CLIMATE.CATEGORY`** – the type of climate conditions associated with the outage event.
+- **`CLIMATE.REGION`** – the broader climate region in which the outage occurred.
 - **`CUSTOMERS.AFFECTED`** – the number of customers impacted by the outage.
 - **`DEMAND.LOSS.MW`** – the estimated loss of electricity demand during the outage in megawatts.
 - **`U.S._STATE`** – the state in which the outage occurred.
 
 
-Together, these variables provide information about the **cause, timing, scale, and environmental context of outage events**, which may help explain differences in outage duration and improve the ability to predict whether an outage will be long or short.
+Collectively, these variables provide information about the context of outage events, which can potentially explain differences in outage duration.
