@@ -449,3 +449,172 @@ To investigate whether outage duration differs between outages caused by natural
 ></iframe>
 
 Outages caused by natural events tend to have longer durations and greater variability compared to infrastructure-related outages. Infrastructure-related outages are typically shorter and more tightly distributed, although both categories contain some extreme outliers.
+
+### Interesting Aggregates
+
+**Median Outage Duration by Month and Cause Type**
+
+To examine how outages vary throughout the year, I created a pivot table showing the median outage duration for each `CAUSE_TYPE` across different months. I was able to see whether certain outage types tend to last longer during specific months of the year. For instance, outages caused by natural events may have longer durations in months with extreme weather conditions. This pivot table helps highlight seasonal patterns in outage severity.
+
+<div style="overflow-x:auto;">
+<table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th>CAUSE_TYPE</th>
+      <th>infrastructure</th>
+      <th>natural</th>
+      <th>other</th>
+    </tr>
+    <tr>
+      <th>MONTH</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1.0</th>
+      <td>372.0</td>
+      <td>1950.0</td>
+      <td>90.0</td>
+    </tr>
+    <tr>
+      <th>2.0</th>
+      <td>215.0</td>
+      <td>2656.5</td>
+      <td>108.0</td>
+    </tr>
+    <tr>
+      <th>3.0</th>
+      <td>105.0</td>
+      <td>2370.0</td>
+      <td>137.5</td>
+    </tr>
+    <tr>
+      <th>4.0</th>
+      <td>130.0</td>
+      <td>2620.0</td>
+      <td>118.0</td>
+    </tr>
+    <tr>
+      <th>5.0</th>
+      <td>327.5</td>
+      <td>2515.0</td>
+      <td>71.5</td>
+    </tr>
+    <tr>
+      <th>6.0</th>
+      <td>150.5</td>
+      <td>2015.5</td>
+      <td>97.0</td>
+    </tr>
+    <tr>
+      <th>7.0</th>
+      <td>222.5</td>
+      <td>1545.0</td>
+      <td>195.0</td>
+    </tr>
+    <tr>
+      <th>8.0</th>
+      <td>249.5</td>
+      <td>1987.5</td>
+      <td>225.0</td>
+    </tr>
+    <tr>
+      <th>9.0</th>
+      <td>247.5</td>
+      <td>4305.0</td>
+      <td>152.5</td>
+    </tr>
+    <tr>
+      <th>10.0</th>
+      <td>235.0</td>
+      <td>3000.0</td>
+      <td>14.0</td>
+    </tr>
+    <tr>
+      <th>11.0</th>
+      <td>759.0</td>
+      <td>2939.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12.0</th>
+      <td>234.0</td>
+      <td>2700.0</td>
+      <td>350.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+## Assessment of Missingness
+
+### MNAR Analysis
+
+Out of the columns in the dataset that contain missing values, the OUTAGE_DURATION column may be Missing Not At Random (MNAR). The missingness of outage duration is most likely due to the actual value of the duration itself. For instance, outages with extremely short durations may not be recorded, and very long and large outages may have incomplete records due to ongoing investigations or reporting delays. As a result, it is possible that the probability of missingness depends on the true unobserved outage duration, which makes it MNAR. 
+In order to better understand the data and make it Missing at Random (MAR), I would need to access outage reporting practices, data collection protocols, and other characteristics of outages such as demand loss or number of customers affected. This information could potentially help explain why certain durations are missing, and make it MAR. 
+
+### Missingness Dependency 
+
+In this section, I investigate whether the missingness of the `DEMAND_LOSS_MW` column depends on other variables in the dataset. To do this, I create a missingness indicator for `DEMAND_LOSS_MW` and use permutation tests to determine whether the proportion of missing values changes across different groups. I first test whether missingness depends on outage severity (`OUTAGE_DURATION`), and then test whether it depends on `MONTH`.
+
+#### Outage Duration
+
+First, I analyzed whether the distribution of outage duration differs when `DEMAND_LOSS_MW` is missing versus when it is not missing.
+
+**Null Hypothesis:** The distribution of `OUTAGE_DURATION` is the same when `DEMAND_LOSS_MW` is missing vs not missing.
+
+**Alternate Hypothesis:** The distribution of `OUTAGE_DURATION` is different when `DEMAND_LOSS_MW` is missing vs not missing.
+
+<iframe
+  src="assets/duration_missing.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+**Results**
+
+I found an observed **TVD of 0.074** with a **p-value of 0.016**. 
+
+Since the p-value is small, I reject the null hypothesis in favor of the alternate hypothesis. This suggests that the distribution of `OUTAGE_DURATION` differs depending on whether `DEMAND_LOSS_MW` is missing, indicating that the missingness of demand loss likely depends on outage duration.
+
+<iframe
+  src="assets/duration_tvd.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+#### Month
+
+Next, I analyze whether the missingness of `DEMAND_LOSS_MW` depends on the column `MONTH`.
+
+**Null Hypothesis:** The distribution of `MONTH` is the same when `DEMAND_LOSS_MW` is missing vs not missing.
+
+**Alternate Hypothesis:** The distribution of `MONTH` is different when `DEMAND_LOSS_MW` is missing vs not missing.
+
+<iframe
+  src="assets/month_missing.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+**Results**
+
+I found an **observed TVD of 0.111** with a **p-value of 0.009**. 
+
+Since the p-value is quite large, I fail to reject the null hypothesis. This suggests that the distribution of `MONTH` is not significantly different when `DEMAND_LOSS_MW` is missing versus when it is not missing, meaning that the missingness of demand loss does not depend on the month of the outage.
+
+<iframe
+  src="assets/month_tvd.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+## Hypothesis Testing
+
