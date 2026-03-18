@@ -16,16 +16,16 @@ The primary variable of interest is **`OUTAGE.DURATION`**, which measures the to
 
 The following variables may also be of interest in my analysis: 
 
-- **`CAUSE.CATEGORY`** – the reported cause of the outage (i.e. severe weather, equipment failure, etc). This variable is particularly relevant when comparing outages caused by natural events versus infrastructure-related failures.
+- **`CAUSE_CATEGORY`** – the reported cause of the outage (i.e. severe weather, equipment failure, etc). This variable is particularly relevant when comparing outages caused by natural events versus infrastructure-related failures.
 - **`MONTH`** – month in which the outage occured; may capture seasonal patterns, such as increased outages during extreme weather months.
 - **`OUTAGE_START_DATE`** - the day the outage started.
 - **`OUTAGE_START_TIME`** - the time at which the outage started.
 - **`OUTAGE_RESTORATION_DATE`** - the day the power was restored.
 - **`OUTAGE_RESTORATION_TIME`** - the time the power was restored.
-- **`CLIMATE.CATEGORY`** – the type of climate conditions associated with the outage event.
-- **`CLIMATE.REGION`** – the broader climate region in which the outage occurred.
+- **`CLIMATE_CATEGORY`** – the type of climate conditions associated with the outage event.
+- **`CLIMATE_REGION`** – the broader climate region in which the outage occurred.
 - **`CUSTOMERS.AFFECTED`** – the number of customers impacted by the outage.
-- **`DEMAND.LOSS.MW`** – the estimated loss of electricity demand during the outage in megawatts.
+- **`DEMAND_LOSS_MW`** – the estimated loss of electricity demand during the outage in megawatts.
 - **`U.S._STATE`** – the state in which the outage occurred.
 
 
@@ -617,4 +617,112 @@ Since the p-value is quite large, I fail to reject the null hypothesis. This sug
 ></iframe>
 
 ## Hypothesis Testing
+
+#### Do outage durations differ depending on the cause type?
+
+I examine whether the average outage duration differs between outages caused by **natural events** and those caused by **infrastructure issues**.
+
+**Null Hypothesis:**  
+The average `OUTAGE_DURATION` is the same for natural outages and infrastructure outages.
+
+**Alternative Hypothesis:**  
+The average `OUTAGE_DURATION` is different for natural outages and infrastructure outages.
+
+**Test Statistic:** To test this hypothesis, I perform a permutation test using the difference in mean outage duration between the two groups as the test statistic.
+
+The significance level used for this test is **α = 0.05**.
+
+<iframe
+  src="assets/hyp_test.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
+**Results**
+
+The observed difference in mean outage duration was **2818.923**, with a **p-value of 0.0**.
+
+Since the p-value is less than the significance level of 0.05, I reject the null hypothesis. Therefore, these results imply that outage durations may differ depending on the cause type. In particular, outages caused by natural events tend to have different average durations than outages caused by infrastructure-related issues.
+
+## Framing a Prediction Problem
+
+The goal of my model is to predict whether a power outage will be **long or short**, based on information available at the time the outage occurs.
+
+This is a **binary classification problem**, where the response variable is `LONG_OUTAGE`, defined as whether `OUTAGE_DURATION` is greater than the median outage duration.
+
+I chose this response variable because it provides a clear measure of outage impact, which aligns with earlier analysis focused on outage duration and impact patterns.
+
+The features used for prediction are `CAUSE_CATEGORY`, `CLIMATE_REGION`, `MONTH`, and `NERC_REGION`. These variables are suitable for this model because they are known at the time of the outage and are relevant to predicting outage impact.
+
+I do not include `OUTAGE_DURATION` as it is the target variable and  `DEMAND_LOSS_MW` because it is typically recorded after the outage has occurred, so including it would result in data leakage.
+
+To evaluate model performance, I use **accuracy** as the primary metric. Accuracy is a suitable metric because it provides a clear measure of how often the model correctly classifies outages as long or short.
+
+## Baseline Model
+
+For my baseline model, I trained a **logistic regression classifier** to predict `DURATION_CLASS`, which labels each outage as either long or short.
+
+The features used in the model are:
+- `CAUSE_CATEGORY` (nominal)
+- `CLIMATE_REGION` (nominal)
+- `NERC_REGION` (nominal)
+- `MONTH` (quantitative)
+
+The categorical features were transformed using **one-hot encoding**, while the numerical feature `MONTH` was unchanged. These preprocessing steps were combined with the classifier in a single sklearn `Pipeline`.
+
+I evaluated the model using **accuracy** on a held-out test set because accuracy is appropriate for this binary classification problem when the classes are approximately balanced.
+
+The baseline model achieved an accuracy of **0.79** on test data. Therefore, this suggests that the model is able to successfully identify some relationship between outage characteristics and outage impact, but there is still room for improvement.
+
+## Final Model
+
+For my final model, I use a **RandomForestClassifier** to predict `DURATION_CLASS`.
+
+In addition to the baseline features, I created and added two new features:
+
+- `SEASON`, derived from `MONTH`
+- `CAUSE_CLIMATE`, which combines `CAUSE_CATEGORY` and `CLIMATE_REGION`
+
+I added `SEASON` because outage impact may vary across different times of year due to seasonal weather patterns as suggested by my EDA. I added `CAUSE_CLIMATE` because the effect of outage cause may depend on the climate region in which the outage occurs.
+
+For hyperparameter tuning, I use **GridSearchCV** to search over values of `max_depth` and `n_estimators`. I chose these hyperparameters because they directly affect model complexity and how well the random forest can capture patterns without overfitting.
+
+The confusion matrix below illustrates my model's performance:
+
+<img src="confusion_matrix.png" width="600">
+
+The confusion matrix demonstrates that the model accurately predicts 160 long outages and 138 short outages, meaning it correctly classifies most outages. While there are 31 long outages predicted as short and 39 short outages predicted as long, the overall performance of the model is reasonably balanced across both classes.
+
+
+## Fairness Analysis
+
+To evaluate fairness, I compared model performance across two groups based on **climate region**:
+
+- **Group X:** Northeast  
+- **Group Y:** South  
+
+#### Evaluation Metric  
+I used **precision for predicting "long" outages** as the evaluation metric, since correctly identifying long outages is vital to understanding severe events.
+
+#### Hypotheses  
+**Null Hypothesis (H₀):** The model has equal precision for long outages in both regions. Any observed difference is due to random chance.  
+**Alternative Hypothesis (H₁):** The model’s precision for long outages differs between the two regions.
+
+#### Test Statistic  
+The test statistic is the **difference in precision** between the two groups:
+Northeast - South
+
+#### Significance Level  
+I used a significance level of **α = 0.05**.
+
+#### Results  
+- **Observed test statistic:** -0.0082  
+- **p-value:** 0.953  
+
+#### Conclusion  
+Since the p-value of 0.953 is much higher than 0.05, we fail to reject the null hypothesis. There is no sufficient evidence to conclude that the model performs differently across the Northeast and South regions.  
+
+Therefore, the model’s performance is consistent across these climate regions, and any observed differences in precision are likely due to random variation rather than systematic bias.
+
 
