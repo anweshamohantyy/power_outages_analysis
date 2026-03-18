@@ -386,7 +386,7 @@ To begin exploring the dataset, I perform univariate analysis on several key var
 The following histogram shows the distribution of outage durations. 
 
 <iframe
-  src="assets/outage_duration_hist.html"
+  src="assets/outage_dist_hist.html"
   width="800"
   height="400"
   frameborder="0"
