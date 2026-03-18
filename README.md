@@ -399,7 +399,7 @@ The distribution of outage duration is extremely right-skewed as most outages la
 Next, I examine the frequency of different outage causes using `CAUSE.CATEGORY`. 
 
 <iframe
-  src="assets/outage_duration_hist.html"
+  src="assets/outages_per_cause.html"
   width="800"
   height="400"
   frameborder="0"
