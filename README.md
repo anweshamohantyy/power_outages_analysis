@@ -215,6 +215,165 @@ Below are the first few rows of the cleaned dataset:
       <td>short</td>
       <td>other</td>
     </tr>
+    <tr>
+      <th>2</th>
+      <td>2010.0</td>
+      <td>10.0</td>
+      <td>Minnesota</td>
+      <td>MN</td>
+      <td>MRO</td>
+      <td>East North Central</td>
+      <td>-1.5</td>
+      <td>cold</td>
+      <td>2010-10-26</td>
+      <td>8:00:00 PM</td>
+      <td>2010-10-28</td>
+      <td>10:00:00 PM</td>
+      <td>severe weather</td>
+      <td>heavy wind</td>
+      <td>3000.0</td>
+      <td>NaN</td>
+      <td>70000.0</td>
+      <td>10.87</td>
+      <td>8.19</td>
+      <td>6.07</td>
+      <td>8.15</td>
+      <td>1467293</td>
+      <td>1801683</td>
+      <td>1951295</td>
+      <td>5222116</td>
+      <td>28.09767152</td>
+      <td>34.50101453</td>
+      <td>37.36598344</td>
+      <td>2.30e+06</td>
+      <td>276463.0</td>
+      <td>10150.0</td>
+      <td>2.59e+06</td>
+      <td>88.9206</td>
+      <td>10.6870</td>
+      <td>0.3924</td>
+      <td>1.706265514</td>
+      <td>2.1</td>
+      <td>5.31e+06</td>
+      <td>73.27</td>
+      <td>15.28</td>
+      <td>2279</td>
+      <td>1700.5</td>
+      <td>18.2</td>
+      <td>2.14</td>
+      <td>0.6</td>
+      <td>91.59266587</td>
+      <td>8.407334131</td>
+      <td>5.478742983</td>
+      <td>long</td>
+      <td>natural</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2012.0</td>
+      <td>6.0</td>
+      <td>Minnesota</td>
+      <td>MN</td>
+      <td>MRO</td>
+      <td>East North Central</td>
+      <td>-0.1</td>
+      <td>normal</td>
+      <td>2012-06-19</td>
+      <td>4:30:00 AM</td>
+      <td>2012-06-20</td>
+      <td>11:00:00 PM</td>
+      <td>severe weather</td>
+      <td>thunderstorm</td>
+      <td>2550.0</td>
+      <td>NaN</td>
+      <td>68200.0</td>
+      <td>11.79</td>
+      <td>9.25</td>
+      <td>6.71</td>
+      <td>9.19</td>
+      <td>1851519</td>
+      <td>1941174</td>
+      <td>1993026</td>
+      <td>5787064</td>
+      <td>31.99409925</td>
+      <td>33.54333043</td>
+      <td>34.43932882</td>
+      <td>2.32e+06</td>
+      <td>278466.0</td>
+      <td>11010.0</td>
+      <td>2.61e+06</td>
+      <td>88.8954</td>
+      <td>10.6822</td>
+      <td>0.4224</td>
+      <td>1.932088738</td>
+      <td>2.2</td>
+      <td>5.38e+06</td>
+      <td>73.27</td>
+      <td>15.28</td>
+      <td>2279</td>
+      <td>1700.5</td>
+      <td>18.2</td>
+      <td>2.14</td>
+      <td>0.6</td>
+      <td>91.59266587</td>
+      <td>8.407334131</td>
+      <td>5.478742983</td>
+      <td>long</td>
+      <td>natural</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2015.0</td>
+      <td>7.0</td>
+      <td>Minnesota</td>
+      <td>MN</td>
+      <td>MRO</td>
+      <td>East North Central</td>
+      <td>1.2</td>
+      <td>warm</td>
+      <td>2015-07-18</td>
+      <td>2:00:00 AM</td>
+      <td>2015-07-19</td>
+      <td>7:00:00 AM</td>
+      <td>severe weather</td>
+      <td>NaN</td>
+      <td>1740.0</td>
+      <td>250.0</td>
+      <td>250000.0</td>
+      <td>13.07</td>
+      <td>10.16</td>
+      <td>7.74</td>
+      <td>10.43</td>
+      <td>2028875</td>
+      <td>2161612</td>
+      <td>1777937</td>
+      <td>5970339</td>
+      <td>33.9825762</td>
+      <td>36.20585029</td>
+      <td>29.77949828</td>
+      <td>2.37e+06</td>
+      <td>289044.0</td>
+      <td>9812.0</td>
+      <td>2.67e+06</td>
+      <td>88.8216</td>
+      <td>10.8113</td>
+      <td>0.3670</td>
+      <td>1.668704177</td>
+      <td>2.2</td>
+      <td>5.49e+06</td>
+      <td>73.27</td>
+      <td>15.28</td>
+      <td>2279</td>
+      <td>1700.5</td>
+      <td>18.2</td>
+      <td>2.14</td>
+      <td>0.6</td>
+      <td>91.59266587</td>
+      <td>8.407334131</td>
+      <td>5.478742983</td>
+      <td>long</td>
+      <td>natural</td>
+    </tr>
   </tbody>
 </table>
 </div>
