@@ -229,7 +229,7 @@ The following histogram shows the distribution of outage durations.
 <iframe
   src="assets/outage_duration_hist.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
