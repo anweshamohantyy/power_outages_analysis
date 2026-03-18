@@ -394,4 +394,15 @@ The following histogram shows the distribution of outage durations.
 
 The distribution of outage duration is extremely right-skewed as most outages last for a short amount of time from 0 to 20k minutes. A small number of outages last extremely long durations, with the highest being slightly over 100k. Therefore, there are significantly large outliers, while the majority is short.
 
+**Frequency of Outage Causes**
+
+Next, I examine the frequency of different outage causes using `CAUSE.CATEGORY`. 
+
+<iframe
+  src="assets/outage_duration_hist.html"
+  width="800"
+  height="400"
+  frameborder="0"
+></iframe>
+
 
