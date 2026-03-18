@@ -633,7 +633,7 @@ The average `OUTAGE_DURATION` is different for natural outages and infrastructur
 The significance level used for this test is **α = 0.05**.
 
 <iframe
-  src="assets/hyp_test.html"
+  src="assets/hyp_test_fig.html"
   width="800"
   height="400"
   frameborder="0"
